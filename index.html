@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gift Certificate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* -------------  RESET ------------- */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Playfair Display', serif;
+      background: #222222;
+    }
+
+    /* -------------  CARD ------------- */
+    #scene {
+      perspective: 1000px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card {
+      width: 95vw;            /* larger card on all screens */
+      max-width: 1100px;      /* caps on very large screens */
+      aspect-ratio: 16 / 9;   /* keeps photo ratio & responsiveness */
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+    }
+
+    .front {
+      background: #fff url("https://i.postimg.cc/HnVmV5fP/melissabdaycert.jpg") center/cover no-repeat;
+    }
+
+    .back {
+      background: #333333;
+      transform: rotateY(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 2rem;
+      color: #ffffff;
+    }
+
+    /* -------------  BACK CONTENT ------------- */
+    .content {
+      max-width: 760px;
+      width: 100%;
+      line-height: 1.48;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    }
+
+    .content h2 {
+      margin: 0.85rem 0 0.35rem;
+      font-size: 1.18em;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .content ul {
+      margin-left: 1.2rem;
+      list-style: disc;
+    }
+
+    .content p,
+    .content ul {
+      margin-bottom: 1rem;
+    }
+
+    /* -------------  LINK COLORS ------------- */
+    .content a:link {
+      color: #e6d0cc;   /* complimentary blush‑pink */
+    }
+    .content a:visited {
+      color: #cfa8b6;   /* slightly muted once visited */
+    }
+    .content a:hover,
+    .content a:focus {
+      color: #ffd5d0;
+      text-decoration: underline;
+    }
+
+    /* -------------  BUTTONS ------------- */
+    .flip-btn {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      padding: 0.45rem 1rem;
+      background: #e6d0cc;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: #222222;
+    }
+  </style>
+</head>
+<body>
+  <div id="scene">
+    <div class="card" id="card">
+      <!-- FRONT -->
+      <div class="face front">
+        <button class="flip-btn" id="toBack">View&nbsp;Details</button>
+      </div>
+
+      <!-- BACK -->
+      <div class="face back">
+        <div class="content">
+          <p style="text-align: right;">
+            Invoice&nbsp;No.&nbsp;000245<br />
+            Certificate&nbsp;Value:&nbsp;$85.00
+          </p>
+
+          <h2>Redeemable&nbsp;For</h2>
+          <p>
+            A 30‑Minute Animal Communication Session<br />(for one cherished
+            pet)
+          </p>
+
+          <h2>Session&nbsp;Overview</h2>
+          <ul>
+            <li>Discover the heart of your companion’s emotions and quirks</li>
+            <li>Hear their insights on family, sitters, and daily life</li>
+            <li>Uncover the soul lesson they share with you</li>
+            <li>Understand how they feel physically and what they may need</li>
+            <li>Clarify likes, dislikes, and end‑of‑life wishes</li>
+            <li>Explore dynamics if other animals are in the household</li>
+          </ul>
+
+          <p>
+            Have your questions ready—let’s listen to what your beloved friend
+            has to say.
+          </p>
+
+          <h2>How&nbsp;to&nbsp;Redeem</h2>
+          <p>
+            Schedule your session at
+            <a href="https://www.annaklocke.com/" target="_blank" rel="noopener noreferrer">
+              www.annaklocke.com
+            </a>
+          </p>
+          <button class="flip-btn" id="toFront">View&nbsp;Front</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById('card');
+    document.getElementById('toBack').addEventListener('click', () => {
+      card.classList.add('flipped');
+    });
+    document.getElementById('toFront').addEventListener('click', () => {
+      card.classList.remove('flipped');
+    });
+  </script>
+</body>
+</html>
