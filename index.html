@@ -43,9 +43,9 @@
     }
 
     .card {
-      width: 95vw;            /* larger card on all screens */
-      max-width: 1100px;      /* caps on very large screens */
-      aspect-ratio: 16 / 9;   /* keeps photo ratio & responsiveness */
+      width: 95vw;            /* larger on all screens */
+      max-width: 1100px;
+      aspect-ratio: 16/9;     /* maintain 16:9 */
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.6s;
@@ -62,17 +62,21 @@
     }
 
     .front {
-      background: #fff url("https://i.postimg.cc/HnVmV5fP/melissabdaycert.jpg") center/cover no-repeat;
+      background: #fff url("https://i.postimg.cc/HnVmV5fP/melissabdaycert.jpg")
+                  center/cover no-repeat;
     }
 
     .back {
       background: #333333;
       transform: rotateY(180deg);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2.5rem 2rem;
+      justify-content: flex-start;
+      padding: 2rem;
       color: #ffffff;
+      position: relative;      /* for absolute button */
+      overflow-y: auto;        /* scroll if content is tall */
     }
 
     /* -------------  BACK CONTENT ------------- */
@@ -81,6 +85,7 @@
       width: 100%;
       line-height: 1.48;
       font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      padding-bottom: 3rem;    /* room for the button */
     }
 
     .content h2 {
@@ -103,10 +108,10 @@
 
     /* -------------  LINK COLORS ------------- */
     .content a:link {
-      color: #e6d0cc;   /* complimentary blush‑pink */
+      color: #e6d0cc;
     }
     .content a:visited {
-      color: #cfa8b6;   /* slightly muted once visited */
+      color: #cfa8b6;
     }
     .content a:hover,
     .content a:focus {
@@ -128,6 +133,14 @@
       cursor: pointer;
       color: #222222;
     }
+
+    /* -------------  SMALL SCREEN PORTRAIT HOTFIX ------------- */
+    @media (max-width: 600px) and (orientation: portrait) {
+      .card {
+        aspect-ratio: auto;
+        height: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -135,47 +148,45 @@
     <div class="card" id="card">
       <!-- FRONT -->
       <div class="face front">
-        <button class="flip-btn" id="toBack">View&nbsp;Details</button>
+        <button class="flip-btn" id="toBack">View Details</button>
       </div>
 
       <!-- BACK -->
       <div class="face back">
         <div class="content">
           <p style="text-align: right;">
-            Invoice&nbsp;No.&nbsp;000245<br />
-            Certificate&nbsp;Value:&nbsp;$85.00
+            Invoice No. 000245<br/>
+            Certificate Value: $85.00
           </p>
 
-          <h2>Redeemable&nbsp;For</h2>
+          <h2>Redeemable For</h2>
           <p>
-            A 30‑Minute Animal Communication Session<br />(for one cherished
-            pet)
+            A 30-Minute Animal Communication Session<br/>(for one cherished pet)
           </p>
 
-          <h2>Session&nbsp;Overview</h2>
+          <h2>Session Overview</h2>
           <ul>
             <li>Discover the heart of your companion’s emotions and quirks</li>
             <li>Hear their insights on family, sitters, and daily life</li>
             <li>Uncover the soul lesson they share with you</li>
             <li>Understand how they feel physically and what they may need</li>
-            <li>Clarify likes, dislikes, and end‑of‑life wishes</li>
+            <li>Clarify likes, dislikes, and end-of-life wishes</li>
             <li>Explore dynamics if other animals are in the household</li>
           </ul>
 
           <p>
-            Have your questions ready—let’s listen to what your beloved friend
-            has to say.
+            Have your questions ready—let’s listen to what your beloved friend has to say.
           </p>
 
-          <h2>How&nbsp;to&nbsp;Redeem</h2>
+          <h2>How to Redeem</h2>
           <p>
             Schedule your session at
             <a href="https://www.annaklocke.com/" target="_blank" rel="noopener noreferrer">
               www.annaklocke.com
             </a>
           </p>
-          <button class="flip-btn" id="toFront">View&nbsp;Front</button>
         </div>
+        <button class="flip-btn" id="toFront">View Front</button>
       </div>
     </div>
   </div>
