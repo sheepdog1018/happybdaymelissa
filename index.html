@@ -1,201 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Gift Certificate</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Google Font -->
+  <!-- Playfair Display -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* -------------  RESET ------------- */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg-dark: #222;
+      --text-light: #fff;
+      --link: #e6d0cc;
+      --link-visited: #cfa8b6;
+      --link-hover: #ffd5d0;
+      --btn-bg: #e6d0cc;
+      --btn-fg: #222;
     }
 
-    html,
-    body {
-      height: 100%;
-      width: 100%;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      background: var(--bg-dark);
+      color: var(--text-light);
       font-family: 'Playfair Display', serif;
-      background: #222222;
+      width:100%;
+    }
+    body {
+      padding: 1rem;
     }
 
-    /* -------------  CARD ------------- */
-    #scene {
-      perspective: 1000px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
+    .container {
+      width: 95vw;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    .card {
-      width: 95vw;            /* larger card on all screens */
-      max-width: 1100px;      /* caps on very large screens */
-      aspect-ratio: 16 / 9;   /* keeps photo ratio & responsiveness */
+    .front, .back {
       position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.6s;
+      background: #333;
+      overflow: visible;
+      border-radius: 4px;
     }
 
-    .card.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .face {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-    }
-
+    /* FRONT */
     .front {
-      background: #fff url("https://i.postimg.cc/HnVmV5fP/melissabdaycert.jpg") center/cover no-repeat;
+      aspect-ratio: 16/9;
+      background: #fff url("https://i.postimg.cc/HnVmV5fP/melissabdaycert.jpg")
+                  center/cover no-repeat;
     }
 
+    /* BACK */
     .back {
-      transform: rotateY(180deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 2rem;
-      color: #ffffff;
+      background: #333;
+      padding: 2rem 1.5rem 4rem;
+      display: none;
+      line-height: 1.5;
+      font-size: clamp(.9rem,1.6vw,1.15rem);
     }
-
-    /* -------------  BACK CONTENT ------------- */
-    .content {
-      max-width: 760px;
-      width: 100%;
-      line-height: 1.48;
-      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-    }
-
-    .content h2 {
-      margin: 0.85rem 0 0.35rem;
-      font-size: 1.18em;
-      letter-spacing: 0.03em;
+    .back h2 {
+      margin: 1rem 0 .5rem;
+      font-size: 1.2rem;
       text-transform: uppercase;
-      font-weight: 700;
+      letter-spacing: .05em;
     }
-
-    .content ul {
-      margin-left: 1.2rem;
-      list-style: disc;
+    .back ul {
+      list-style: disc inside;
+      margin: 0 0 1rem 0;
+      padding-left: 0.5rem;
     }
-
-    .content p,
-    .content ul {
-      margin-bottom: 1rem;
+    .back a {
+      color: var(--link);
+      text-decoration: none;
     }
-
-    /* -------------  LINK COLORS ------------- */
-    .content a:link {
-      color: #e6d0cc;   /* complimentary blush‑pink */
-    }
-    .content a:visited {
-      color: #cfa8b6;   /* slightly muted once visited */
-    }
-    .content a:hover,
-    .content a:focus {
-      color: #ffd5d0;
+    .back a:visited { color: var(--link-visited); }
+    .back a:hover, .back a:focus {
+      color: var(--link-hover);
       text-decoration: underline;
     }
 
-    /* -------------  BUTTONS ------------- */
-    .flip-btn {
+    /* shared button */
+    button {
       position: absolute;
       bottom: 1rem;
       right: 1rem;
-      padding: 0.45rem 1rem;
-      background: #e6d0cc;
+      padding: .5rem 1rem;
+      background: var(--btn-bg);
+      color: var(--btn-fg);
       border: none;
       border-radius: 4px;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
+      font-size: clamp(.9rem,1.5vw,1rem);
       cursor: pointer;
-      color: #222222;
     }
-	/* override only the “View Front” button on the back face */
-.face.back .flip-btn {
-  position: static;
-  float: right;
-  margin-top: 1rem;
-  /* reset any absolute offsets */
-  bottom: auto;
-  right: auto;
-}
   </style>
 </head>
 <body>
-  <div id="scene">
-    <div class="card" id="card">
-      <!-- FRONT -->
-      <div class="face front">
-        <button class="flip-btn" id="toBack">View&nbsp;Details</button>
+
+  <div class="container" id="wrapper">
+    <!-- FRONT -->
+    <div class="front" id="front">
+      <button id="toBack">View Details</button>
+    </div>
+
+    <!-- BACK -->
+    <div class="back" id="back">
+      <div style="text-align:right;">
+        Invoice No. 000245<br>
+        Certificate Value: $85.00
       </div>
 
-      <!-- BACK -->
-      <div class="face back">
-        <div class="content">
-          <p style="text-align: right;">
-            Invoice&nbsp;No.&nbsp;000245<br />
-            Certificate&nbsp;Value:&nbsp;$85.00
-          </p>
+      <h2>Redeemable For</h2>
+      <p>A 30-Minute Animal Communication Session<br>(for one cherished pet)</p>
 
-          <h2>Redeemable&nbsp;For</h2>
-          <p>
-            A 30‑Minute Animal Communication Session<br />(for one cherished
-            pet)
-          </p>
+      <h2>Session Overview</h2>
+      <ul>
+        <li>Discover the heart of your companion’s emotions and quirks</li>
+        <li>Hear their insights on family, sitters, and daily life</li>
+        <li>Uncover the soul lesson they share with you</li>
+        <li>Understand how they feel physically and what they may need</li>
+        <li>Clarify likes, dislikes, and end-of-life wishes</li>
+        <li>Explore dynamics if other animals are in the household</li>
+      </ul>
 
-          <h2>Session&nbsp;Overview</h2>
-          <ul>
-            <li>Discover the heart of your companion’s emotions and quirks</li>
-            <li>Hear their insights on family, sitters, and daily life</li>
-            <li>Uncover the soul lesson they share with you</li>
-            <li>Understand how they feel physically and what they may need</li>
-            <li>Clarify likes, dislikes, and end‑of‑life wishes</li>
-            <li>Explore dynamics if other animals are in the household</li>
-          </ul>
+      <p>Have your questions ready—let’s listen to what your beloved friend has to say.</p>
 
-          <p>
-            Have your questions ready—let’s listen to what your beloved friend
-            has to say.
-          </p>
+      <h2>How to Redeem</h2>
+      <p>
+        Schedule your session at
+        <a href="https://www.annaklocke.com/" target="_blank" rel="noopener">
+          www.annaklocke.com
+        </a>
+      </p>
 
-          <h2>How&nbsp;to&nbsp;Redeem</h2>
-          <p>
-            Schedule your session at
-            <a href="https://www.annaklocke.com/" target="_blank" rel="noopener noreferrer">
-              www.annaklocke.com
-            </a>
-          </p>
-          <button class="flip-btn" id="toFront">View&nbsp;Front</button>
-        </div>
-      </div>
+      <button id="toFront">View Front</button>
     </div>
   </div>
 
   <script>
-    const card = document.getElementById('card');
+    const front = document.getElementById('front');
+    const back  = document.getElementById('back');
     document.getElementById('toBack').addEventListener('click', () => {
-      card.classList.add('flipped');
+      front.style.display = 'none';
+      back.style.display = 'block';
     });
     document.getElementById('toFront').addEventListener('click', () => {
-      card.classList.remove('flipped');
+      back.style.display = 'none';
+      front.style.display = 'block';
     });
   </script>
+
 </body>
 </html>
